@@ -2872,6 +2872,15 @@ static uc_err uc_restore_latest_snapshot(struct uc_struct *uc)
     return UC_ERR_OK;
 }
 
+
+UNICORN_EXPORT
+uc_err uc_intr(uc_engine *uc, int irqno, int set) {
+    CPUClass *cc = CPU_GET_CLASS(uc->cpu);
+    cc->set_irq(uc->cpu, irqno, set);
+    return UC_ERR_OK;
+}
+
+
 #ifdef UNICORN_TRACER
 uc_tracer *get_tracer()
 {

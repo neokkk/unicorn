@@ -143,6 +143,11 @@ static void riscv_cpu_set_pc(CPUState *cs, vaddr value)
     env->pc = value;
 }
 
+static void riscv_cpu_set_irq(CPUState *cs, int irqno, int level) {
+    RISCVCPU *cpu = RISCV_CPU(cs);
+    riscv_cpu_update_mip(cpu, 1u << irqno, BOOL_TO_MASK(level));
+}
+
 static void riscv_cpu_synchronize_from_tb(CPUState *cs, TranslationBlock *tb)
 {
     RISCVCPU *cpu = RISCV_CPU(cs);
@@ -308,6 +313,8 @@ static void riscv_cpu_class_init(struct uc_struct *uc, CPUClass *c, void *data)
     cc->do_unaligned_access = riscv_cpu_do_unaligned_access;
     cc->tcg_initialize = riscv_translate_init;
     cc->tlb_fill_cpu = riscv_cpu_tlb_fill;
+
+    cc->set_irq = riscv_cpu_set_irq; // nk
 }
 
 typedef struct CPUModelInfo {

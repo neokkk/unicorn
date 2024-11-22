@@ -104,6 +104,7 @@ struct TranslationBlock;
 typedef struct CPUClass {
     /* no DeviceClass->reset(), add here. */
     void (*reset)(CPUState *cpu);
+    void (*set_irq)(CPUState *cpu, int irqno, int level); // nk
     bool (*has_work)(CPUState *cpu);
     void (*do_interrupt)(CPUState *cpu);
     void (*do_unaligned_access)(CPUState *cpu, vaddr addr,

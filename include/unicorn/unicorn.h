@@ -1353,6 +1353,9 @@ size_t uc_context_size(uc_engine *uc);
 UNICORN_EXPORT
 uc_err uc_context_free(uc_context *context);
 
+UNICORN_EXPORT
+uc_err uc_intr(uc_engine *uc, int irqno, int set);
+
 #ifdef __cplusplus
 }
 #endif
